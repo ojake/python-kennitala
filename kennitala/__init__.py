@@ -4,7 +4,7 @@ import random
 from datetime import date, timedelta
 
 __author__ = 'Jakub Owczarski'
-__version__ = '0.1.0b'
+__version__ = '0.1.1b'
 __license__ = 'MIT'
 
 
