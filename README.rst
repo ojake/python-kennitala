@@ -2,17 +2,21 @@ python-kennitala
 ================
 
 python-kennitala is a python library for common operations on Icelandic
-National Registry codes - [kennitala](https://en.wikipedia.org/wiki/Kennitala).
+National Registry codes -
+`kennitala <https://en.wikipedia.org/wiki/Kennitala>`_.
 
 Capabilities
 ------------
 
-* Validation of kennitala
-* Extraction of birth date from kennitala
-* Generating kennitala for a given birth date
-* Generating random kennitala
+-  Validation of kennitala
+-  Extraction of birth date from kennitala
+-  Generating kennitala for a given birth date
+-  Generating random kennitala
 
-## Usage
+Usage
+-----
+
+::
 
     >>> from kennitala import Kennitala
     >>>
@@ -31,12 +35,14 @@ Capabilities
     kennitala.Invalid
     >>>
 
-
 Tests
 -----
 
-Tests are written for [py.test](https://pytest.org/latest)
+Tests are written for `py.test <https://pytest.org/latest>`_
 
 To run tests simply execute:
 
+::
+
     $ PYTHONPATH=./ py.test tests
+

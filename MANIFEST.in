@@ -1,0 +1,2 @@
+include README LICENSE CHANGES.md
+recursive-include kennitala *.py
