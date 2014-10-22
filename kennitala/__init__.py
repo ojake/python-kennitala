@@ -87,6 +87,9 @@ class Kennitala:
 
     def validate(self):
         """Returns True if kennitala is valid, False otherwise"""
+        if not self.kennitala:
+            return False
+
         pattern = r'\d{6}\-?\d{4}'
         if not re.match(pattern, self.kennitala):
             return False
