@@ -5,6 +5,7 @@ import kennitala
 setup(
     name='kennitala',
     version=kennitala.__version__,
+    url='https://github.com/ojake/python-kennitala',
     description='Icelandic national registry codes made easy',
     author='Jakub Owczarski',
     author_email='jakub3279@gmail.com',

@@ -4,8 +4,7 @@ python-kennitala
 python-kennitala is a python library for common operations on Icelandic
 National Registry codes - [kennitala](https://en.wikipedia.org/wiki/Kennitala).
 
-Capabilities
-------------
+## Capabilities
 
 * Validation of kennitala
 * Extraction of birth date from kennitala
@@ -32,8 +31,16 @@ Capabilities
     >>>
 
 
-Tests
------
+## Installation
+
+inside your virtualenv execute:
+
+    $ pip install kennitala
+
+or download and install manually.
+
+
+## Tests
 
 Tests are written for [py.test](https://pytest.org/latest)
 

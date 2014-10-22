@@ -35,6 +35,17 @@ Usage
     kennitala.Invalid
     >>>
 
+Installation
+------------
+
+inside your virtualenv execute:
+
+::
+
+    $ pip install kennitala
+
+or download and install manually.
+
 Tests
 -----
 
