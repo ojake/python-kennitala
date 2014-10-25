@@ -16,6 +16,9 @@ class Kennitala:
     class Invalid(Exception):
         """Kennitala is not valid"""
 
+    _age_prefix = {'8': '18', '9': '19', '0': '20'}
+    _age_postfix = {v: k for k, v in _age_prefix.items()}
+
     @staticmethod
     def _get_date(year, month, day):
         """Returns date or raises ValueError"""
@@ -43,11 +46,11 @@ class Kennitala:
 
     def _extract_date_parts(self):
         """Returns year, month and day from the kennitala"""
-        millenium = '19' if self.kennitala[-1] == '9' else '20'
+        age_prefix = Kennitala._age_prefix[self.kennitala[-1]]
 
         day = int(self.kennitala[:2])
         month = int(self.kennitala[2:4])
-        year = int(millenium + self.kennitala[4:6])
+        year = int(age_prefix + self.kennitala[4:6])
 
         return year, month, day
 
@@ -56,7 +59,7 @@ class Kennitala:
         """Returns valid kennitala for a given birth_date"""
         full_year = str(birth_date.year)
         year = full_year[-2:]
-        millenium = '0' if full_year[0] == '2' else '9'
+        age_postfix = Kennitala._age_postfix[full_year[:2]]
         month = str(birth_date.month).rjust(2, '0')
         day = str(birth_date.day).rjust(2, '0')
 
@@ -72,7 +75,7 @@ class Kennitala:
             except ValueError:
                 rnd = get_rand()
         
-        return kennitala + checkdigit + millenium
+        return kennitala + checkdigit + age_postfix
 
     @staticmethod
     def random(start=None, end=None):
@@ -113,7 +116,7 @@ class Kennitala:
 
         kennitala = self.kennitala.replace('-', '')
 
-        if not kennitala[-1] in ('0', '9'):
+        if not kennitala[-1] in Kennitala._age_prefix:
             return False
 
         year, month, day = self._extract_date_parts()
