@@ -61,12 +61,13 @@ def test_kennitala_birth_date_raises(kt_no):
         birth_date = Kennitala.to_date(kt_no)
 
 
-def test_kennitala_generate():
-    """Tests kennitala generation"""
+@pytest.mark.parametrize('idx', range(100))
+def test_kennitala_generate(idx):
+    """Test bunch of generated kennitalas"""
     today = date.today()
     kt_no = Kennitala.generate(today)
     kennitala = Kennitala(kt_no)
-    assert kennitala.validate()
+    assert kennitala.validate(), kt_no
     assert kennitala.get_birth_date() == today
 
 
@@ -93,3 +94,10 @@ def test_kennitala_random_same_day():
     kt_no = Kennitala.random(y2k, y2k)
     assert Kennitala.is_valid(kt_no)
     assert Kennitala.to_date(kt_no) == y2k
+
+
+def test_kennitala_is_valid_none():
+    """Tests that None is not valid kennitala"""
+    kennitala = Kennitala(None)
+    assert not kennitala.validate()
+    assert not Kennitala.is_valid(None)

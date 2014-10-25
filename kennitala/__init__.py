@@ -23,13 +23,22 @@ class Kennitala:
 
     @staticmethod
     def _compute_checkdigit(kennitala):
-        """Computes checkdigit for (not necessarily complete) kennitala"""
+        """Computes checkdigit for (not necessarily complete) kennitala.
+        Raises ValueError if random portion of kennitala is invalid.
+        """
         multipliers = (3, 2, 7, 6, 5, 4, 3, 2)
         summed = 0
         for idx, multiplier in enumerate(multipliers):
             summed += multiplier * int(kennitala[idx])
+        
+        mod = summed % 11
+        if mod == 0:
+            return '0'
 
-        checkdigit = 11 - ((summed % 11) or 11)
+        checkdigit = 11 - (summed % 11)
+        if checkdigit == 10:
+            raise ValueError
+
         return str(checkdigit)
 
     def _extract_date_parts(self):
@@ -50,11 +59,19 @@ class Kennitala:
         millenium = '0' if full_year[0] == '2' else '9'
         month = str(birth_date.month).rjust(2, '0')
         day = str(birth_date.day).rjust(2, '0')
-        rnd = str(random.randint(20, 99))
 
-        kennitala = day + month + year + rnd
-        checkdigit = Kennitala._compute_checkdigit(kennitala)
+        kennitala = None
+        get_rand = lambda: random.randint(20, 99)
+        rnd = get_rand()
 
+        while kennitala is None:
+            try_kennitala = day + month + year + str(rnd)
+            try:
+                checkdigit = Kennitala._compute_checkdigit(try_kennitala)
+                kennitala = try_kennitala
+            except ValueError:
+                rnd = get_rand()
+        
         return kennitala + checkdigit + millenium
 
     @staticmethod
@@ -103,11 +120,10 @@ class Kennitala:
 
         try:
             Kennitala._get_date(year, month, day)
+            checkdigit = Kennitala._compute_checkdigit(kennitala)
+            return kennitala[8] == checkdigit
         except ValueError:
             return False
-
-        checkdigit = Kennitala._compute_checkdigit(kennitala)
-        return kennitala[8] == checkdigit
 
     def get_birth_date(self):
         """Return birth date or raise Kennitala.Invalid"""
