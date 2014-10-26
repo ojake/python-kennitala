@@ -4,7 +4,7 @@ import random
 from datetime import date, timedelta
 
 __author__ = 'Jakub Owczarski'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __license__ = 'MIT'
 
 
@@ -32,8 +32,9 @@ class Kennitala:
         multipliers = (3, 2, 7, 6, 5, 4, 3, 2)
         summed = 0
         for idx, multiplier in enumerate(multipliers):
-            summed += multiplier * int(kennitala[idx])
-        
+            digit = int(kennitala[idx])
+            summed += multiplier * digit
+
         mod = summed % 11
         if mod == 0:
             return '0'
@@ -52,16 +53,25 @@ class Kennitala:
         month = int(self.kennitala[2:4])
         year = int(age_prefix + self.kennitala[4:6])
 
+        if 41 <= day <= 71:
+            day = day - 40
+
         return year, month, day
 
     @staticmethod
-    def generate(birth_date):
-        """Returns valid kennitala for a given birth_date"""
+    def generate(birth_date, person=True):
+        """Returns valid kennitala for a given birth_date.
+        If person is True it's personal kennitala
+        otherwise it's company kennitala.
+        """
         full_year = str(birth_date.year)
         year = full_year[-2:]
         age_postfix = Kennitala._age_postfix[full_year[:2]]
         month = str(birth_date.month).rjust(2, '0')
-        day = str(birth_date.day).rjust(2, '0')
+        if person:
+            day = str(birth_date.day).rjust(2, '0')
+        else:
+            day = str(birth_date.day + 40)
 
         kennitala = None
         get_rand = lambda: random.randint(20, 99)
@@ -74,11 +84,12 @@ class Kennitala:
                 kennitala = try_kennitala
             except ValueError:
                 rnd = get_rand()
-        
-        return kennitala + checkdigit + age_postfix
+
+        kt_no = kennitala + checkdigit + age_postfix
+        return kt_no
 
     @staticmethod
-    def random(start=None, end=None):
+    def random(start=None, end=None, person=True):
         """Generate random kennitala for given date range.
         Default range is [1900-01-01, today] inclusive.
         This is pretty memory intensive for large ranges.
@@ -93,12 +104,19 @@ class Kennitala:
         days = (end - start).days
         all_dates = [start + timedelta(days=x) for x in range(days+1)]
         birth_date = random.choice(all_dates)
-        return Kennitala.generate(birth_date)
+        return Kennitala.generate(birth_date, person)
 
     @staticmethod
     def is_valid(kennitala):
         """Returns True if kenntiala is valid, False otherwise"""
         return Kennitala(kennitala).validate()
+
+    @staticmethod
+    def is_personal(kennitala):
+        """Returns True if kennitala is personal, False if company
+        or Raises Kennitala.Invalid.
+        """
+        return Kennitala(kennitala).is_person()
 
     @staticmethod
     def to_date(kennitala):
@@ -124,7 +142,7 @@ class Kennitala:
         try:
             Kennitala._get_date(year, month, day)
             checkdigit = Kennitala._compute_checkdigit(kennitala)
-            return kennitala[8] == checkdigit
+            return kennitala[-2] == checkdigit
         except ValueError:
             return False
 
@@ -135,3 +153,13 @@ class Kennitala:
 
         year, month, day = self._extract_date_parts()
         return Kennitala._get_date(year, month, day)
+
+    def is_person(self):
+        """Returns True if kennitala belongs to person.
+        False if belongs to company.
+        or Raises Kennitala.Invalid.
+        """
+        if not self.validate():
+            raise Kennitala.Invalid
+
+        return int(self.kennitala[0]) <= 3

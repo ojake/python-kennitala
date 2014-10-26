@@ -8,11 +8,13 @@ National Registry codes - [kennitala](https://en.wikipedia.org/wiki/Kennitala).
 
 * Validation of kennitala
 * Extraction of birth date from kennitala
-* Generating kennitala for a given birth date
-* Generating random kennitala
+* Generating kennitala for a given birth date (for people or companies)
+* Generating random kennitala (for people or companies)
+* Recognize if kennitala belongs to person or company
 
 ## Usage
 
+    >>> from datetime import date
     >>> from kennitala import Kennitala
     >>>
     >>> kt_no = '0101109639'
@@ -29,6 +31,9 @@ National Registry codes - [kennitala](https://en.wikipedia.org/wiki/Kennitala).
         File kennitala.py, in get_birth_date
     kennitala.Invalid
     >>>
+    >>> company_kt = Kennitala.generate(date.today(), person=False)
+    >>> Kennitala.is_personal(company_kt)
+    False
 
 
 ## Installation

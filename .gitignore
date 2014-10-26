@@ -1,8 +1,9 @@
 *.py[co]
+*.swp
 __pycache__
 MANIFEST
 dist/
 venvs/
 .coverage
-tests/all_people.txt
 tests/test_full.py
+tests/skra.txt

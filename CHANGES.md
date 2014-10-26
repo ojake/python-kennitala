@@ -1,5 +1,7 @@
 # 0.1.2 (2014-10-25)
 
+Support for company kennitala.
+
 Fixed control digit computation - according to [Icelandic wiki entry on kennitala](https://is.wikipedia.org/wiki/Kennitala).
 
 Fixed validation for people born in 1800s
