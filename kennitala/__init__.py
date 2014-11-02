@@ -20,11 +20,6 @@ class Kennitala:
     _age_postfix = {v: k for k, v in _age_prefix.items()}
 
     @staticmethod
-    def _get_date(year, month, day):
-        """Returns date or raises ValueError"""
-        return date(year, month, day)
-
-    @staticmethod
     def _compute_checkdigit(kennitala):
         """Computes checkdigit for (not necessarily complete) kennitala.
         Raises ValueError if random portion of kennitala is invalid.
@@ -140,7 +135,7 @@ class Kennitala:
         year, month, day = self._extract_date_parts()
 
         try:
-            Kennitala._get_date(year, month, day)
+            date(year, month, day)
             checkdigit = Kennitala._compute_checkdigit(kennitala)
             return kennitala[-2] == checkdigit
         except ValueError:
@@ -152,7 +147,7 @@ class Kennitala:
             raise Kennitala.Invalid()
 
         year, month, day = self._extract_date_parts()
-        return Kennitala._get_date(year, month, day)
+        return date(year, month, day)
 
     def is_person(self):
         """Returns True if kennitala belongs to person.
