@@ -11,6 +11,7 @@ National Registry codes - [kennitala](https://en.wikipedia.org/wiki/Kennitala).
 * Generating kennitala for a given birth date (for people or companies)
 * Generating random kennitala (for people or companies)
 * Recognize if kennitala belongs to person or company
+* Common formatting.
 
 ## Usage
 
@@ -23,6 +24,10 @@ National Registry codes - [kennitala](https://en.wikipedia.org/wiki/Kennitala).
     True
     >>> kennitala.get_birth_date()
     datetime.date(1910, 1, 1)
+    >>> kennitala.only_digits()
+    '0101109639'
+    >>> kennitala.with_dash()
+    '010110-9639'
     >>> kennitala = Kennitala(kt_no.replace('3', '4'))
     >>> kennitala.validate()
     False

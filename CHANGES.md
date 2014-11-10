@@ -1,3 +1,7 @@
+# 0.1.3 (2014-11-10)
+
+Added two formatting functions: only_digits and with_dash
+
 # 0.1.2 (2014-10-25)
 
 Support for company kennitala.

@@ -4,7 +4,7 @@ import random
 from datetime import date, timedelta
 
 __author__ = 'Jakub Owczarski'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 __license__ = 'MIT'
 
 
@@ -12,6 +12,11 @@ class Kennitala:
     """Icelandic national registry codes made easy"""
     def __init__(self, kennitala):
         self.kennitala = kennitala
+
+    def __str__(self):
+        if not self.validate():
+            return 'Invalid kennitala'
+        return self.kennitala
 
     class Invalid(Exception):
         """Kennitala is not valid"""
@@ -158,3 +163,20 @@ class Kennitala:
             raise Kennitala.Invalid
 
         return int(self.kennitala[0]) <= 3
+
+    def only_digits(self):
+        """Returns kennitala without '-' or raises Kennitala.Invalid"""
+        if not self.validate():
+            raise Kennitala.Invalid
+
+        return self.kennitala.replace('-', '')
+
+    def with_dash(self):
+        """Returns kennitala with dash after date part.
+        Raises Kennitala.Invalid if invalid.
+        """
+        if not self.validate():
+            raise Kennitala.Invalid
+        if '-' in self.kennitala:
+            return self.kennitala
+        return '{0}-{1}'.format(self.kennitala[:6], self.kennitala[6:])

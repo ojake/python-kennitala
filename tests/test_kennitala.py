@@ -25,6 +25,17 @@ invalid_kennitalas = (
 
 
 @pytest.mark.parametrize('kt_no', valid_kennitalas)
+def test_str_ok(kt_no):
+    kennitala = Kennitala(kt_no)
+    assert str(kennitala) == kt_no
+
+@pytest.mark.parametrize('kt_no', invalid_kennitalas)
+def test_str_inv(kt_no):
+    kennitala = Kennitala(kt_no)
+    assert str(kennitala) == 'Invalid kennitala'
+
+
+@pytest.mark.parametrize('kt_no', valid_kennitalas)
 def test_kennitala_ok(kt_no):
     """Tests few real kennitala numbers"""
     kennitala = Kennitala(kt_no)
@@ -125,3 +136,39 @@ def test_kennitala_is_person_fails(kt_no):
     personal = (0 <= first_digit <= 3)
     with pytest.raises(Kennitala.Invalid):
         fail = kennitala.is_person()
+
+
+@pytest.mark.parametrize('kt_no', invalid_kennitalas)
+def test_kennitala_only_digits_raises(kt_no):
+    """Tests Kennitala.only_digits raises on invalid input"""
+    kennitala = Kennitala(kt_no)
+    with pytest.raises(Kennitala.Invalid):
+        digits = kennitala.only_digits()
+
+
+@pytest.mark.parametrize('kt_no', invalid_kennitalas)
+def test_kennitala_with_dash_raises(kt_no):
+    """Tests Kennitala.with_dash raises on invalid input"""
+    kennitala = Kennitala(kt_no)
+    with pytest.raises(Kennitala.Invalid):
+        dashed = kennitala.with_dash()
+
+
+@pytest.mark.parametrize('kt_no', valid_kennitalas)
+def test_kennitala_only_digits(kt_no):
+    """Test kennitala only_digits"""
+    kennitala = Kennitala(kt_no)
+    digits = kennitala.only_digits()
+    assert len(digits) == 10
+    assert all(x.isdigit() for x in digits)
+
+
+@pytest.mark.parametrize('kt_no', valid_kennitalas)
+def test_kennitala_with_dash(kt_no):
+    """Test kennitala only_digits"""
+    kennitala = Kennitala(kt_no)
+    dashed = kennitala.with_dash()
+    assert len(dashed) == 11
+    assert len([x for x in dashed if x.isdigit()]) == 10
+    assert dashed.count('-') == 1
+    assert dashed[6] == '-'
