@@ -102,8 +102,7 @@ class Kennitala:
         if start == end:
             return Kennitala.generate(start)
         days = (end - start).days
-        all_dates = [start + timedelta(days=x) for x in range(days+1)]
-        birth_date = random.choice(all_dates)
+        birth_date = start + timedelta(days=random.choice(range(days+1)))
         return Kennitala.generate(birth_date, person)
 
     @staticmethod
