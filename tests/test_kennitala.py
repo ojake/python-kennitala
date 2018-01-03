@@ -9,6 +9,7 @@ valid_kennitalas = (
     '140543-3229',  # kennitala of Icelandic president
     '1203753509',  # kennitala of Icelandic prime minister
     '6503760649',  # kennitala of Þjóðskrá Íslands (Registry Iceland)
+    '7102692709',  # kennitala of Þjóðleikhúsið (National Theatre)
 )
 
 birth_dates = (date(1943, 5, 14), date(1975, 3, 12))
