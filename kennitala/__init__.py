@@ -140,6 +140,11 @@ class Kennitala:
 
         try:
             date(year, month, day)
+        except ValueError:
+            if int(kennitala[0]) <= 3 or 1 > day > 31:
+                return False
+
+        try:
             checkdigit = Kennitala._compute_checkdigit(kennitala)
             return kennitala[-2] == checkdigit
         except ValueError:
