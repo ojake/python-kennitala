@@ -127,7 +127,7 @@ class Kennitala:
         if not self.kennitala:
             return False
 
-        pattern = r'\d{6}\-?\d{4}'
+        pattern = r'\d{6}\-?\d{4}\b'
         if not re.match(pattern, self.kennitala):
             return False
 
